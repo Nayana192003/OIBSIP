@@ -1,0 +1,52 @@
+import java.util.Random;
+import java.util.Scanner;
+
+public class NumberGuessingGame {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+
+        int lowerBound = 1;  // The lowest possible number in the guessing range
+        int upperBound = 100;  // The highest possible number in the guessing range
+        int targetNumber = random.nextInt(upperBound - lowerBound + 1) + lowerBound;  // Generate a random target number
+
+        int attempts = 0;  // Counter for the number of attempts made by the player
+        int maxAttempts = 10;  // The maximum number of attempts allowed
+        int points = 100; // Initial points for the player
+
+        System.out.println("Welcome to the Number Guessing Game!");
+        System.out.println("I've selected a random number between " + lowerBound + " and " + upperBound + ".");
+        System.out.println("You have " + maxAttempts + " attempts to guess the number.");
+
+        while (attempts < maxAttempts) {
+            System.out.print("Guess #" + (attempts + 1) + ": Enter your guess: ");
+            int guess = scanner.nextInt();
+            attempts++;
+
+            if (guess < lowerBound || guess > upperBound) {
+                System.out.println("Please enter a number between " + lowerBound + " and " + upperBound + ".");
+                continue;  // Prompt for a new guess if it's out of the allowed range
+            }
+
+            if (guess == targetNumber) {
+                System.out.println("Congratulations! You've guessed the correct number: " + targetNumber);
+                System.out.println("You earned " + points + " points.");
+                break;  // Exit the loop when the correct number is guessed
+            } else if (guess < targetNumber) {
+                System.out.println("Try a higher number.");  // Provide a hint to go higher
+            } else {
+                System.out.println("Try a lower number.");  // Provide a hint to go lower
+            }
+
+            // Deduct points for each attempt
+            points -= 10;
+        }
+
+        if (attempts >= maxAttempts) {
+            System.out.println("Game over! You've used all your attempts.");
+            System.out.println("The correct number was: " + targetNumber);
+        }
+
+        scanner.close();  // Close the scanner to free up system resources
+    }
+}
