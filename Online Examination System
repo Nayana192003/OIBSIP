@@ -4,7 +4,6 @@ import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
-// Define a User class to represent user information
 class User {
     private String username;
     private String password;
@@ -29,7 +28,6 @@ class User {
     }
 }
 
-// Define a Question class to represent exam questions
 class Question {
     private String questionText;
     private List<String> options;
@@ -55,28 +53,31 @@ class Question {
 }
 
 public class OnlineExaminationSystem {
-    private static User currentUser;  // Store information about the current user
-    private static List<Question> questions;  // Store the exam questions
-    private static List<Integer> selectedAnswers;  // Store the selected answers by the user
-    private static Timer timer;  // Timer for tracking exam duration
-    private static int remainingTimeInSeconds = 1800; // 30 minutes (initially)
+    private static User currentUser;
+    private static List<Question> questions;
+    private static List<Integer> selectedAnswers;
+    private static Timer timer;
+    private static int remainingTimeInSeconds = 1800; // 30 minutes
 
     public static void main(String[] args) {
-        // Initialize the list of exam questions
         initializeQuestions();
-        // Perform user login
         login();
     }
 
-    // Method to initialize the list of exam questions
     private static void initializeQuestions() {
         questions = new ArrayList<>();
-        // Add sample questions to the list
         questions.add(new Question("What is the capital of France?", List.of("Berlin", "London", "Paris", "Madrid"), 2));
-        // (Additional questions omitted for brevity)
+        questions.add(new Question(" Who wrote the play 'Romeo and Juliet'?", List.of("Charles Dickens", "William Shakespeare", "Jane Austen", "F.Scott Fitzgerald"), 1));
+        questions.add(new Question("What is anything to power zero?", List.of("Infinity", "Zero", "Undefined", "One"),3));
+        questions.add(new Question("Which gas makes up the majority of Earth's atmosphere?", List.of("Oxygen", "Carbon dioxide", "Nitrogen", "Hydrogen"),2));
+        questions.add(new Question("Who is known as the 'Father of Modern Physics'?", List.of("Galileo Galilei", "Isaac Newton", "Albert Einstein", "Stephen Hawking"),2));
+        questions.add(new Question("What is considered the IT capital of India?", List.of("Mumbai", "Hyderabad", "Madurai", "Bengaluru"),3));
+        questions.add(new Question("In which year did the Titanic sink?", List.of("1912", "1923", "1934", "1945"),0));
+        questions.add(new Question("Which country is known as the Land of the Rising Sun?", List.of("China", "India", "Japan", "South Korea"),2));
+        questions.add(new Question("What is chemical symbol for gold?", List.of("Au", "Ag", "Fe", "Hg"),0));
+        questions.add(new Question("Who painted Mona Lisa?", List.of("Pablo Picasso", "Leonardo da Vinci", "Vincent van Gogh", "Michelangelo"),1));
     }
 
-    // Method for user login
     private static void login() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter your username: ");
@@ -84,19 +85,17 @@ public class OnlineExaminationSystem {
         System.out.print("Enter your password: ");
         String password = scanner.nextLine();
 
-        // Implement user authentication logic here (e.g., check against a user database).
-        // For this example, a new User object is created for the current user.
-        currentUser = new User(username, password, "Pradhaan S");
+        // Implement user authentication logic here (e.g., check against a user database)
+        currentUser = new User(username, password, "Nayana S A");
 
         if (currentUser != null) {
-            showMainMenu(scanner); // If login is successful, show the main menu.
+            showMainMenu(scanner);
         } else {
             System.out.println("Login failed. Please try again.");
             login();
         }
     }
 
-    // Method to display the main menu for the user
     private static void showMainMenu(Scanner scanner) {
         System.out.println("Welcome, " + currentUser.getFullName() + "!");
         System.out.println("1. Start Exam");
@@ -127,7 +126,6 @@ public class OnlineExaminationSystem {
         }
     }
 
-    // Method to start the exam
     private static void startExam(Scanner scanner) {
         selectedAnswers = new ArrayList<>();
         timer = new Timer();
@@ -156,7 +154,6 @@ public class OnlineExaminationSystem {
         autoSubmit();
     }
 
-    // Method to automatically submit the exam when time is up
     private static void autoSubmit() {
         if (timer != null) {
             timer.cancel();
@@ -165,7 +162,6 @@ public class OnlineExaminationSystem {
         showResult();
     }
 
-    // Method to display the exam result
     private static void showResult() {
         int score = 0;
         for (int i = 0; i < questions.size(); i++) {
@@ -180,7 +176,6 @@ public class OnlineExaminationSystem {
         logout(new Scanner(System.in));
     }
 
-    // Method to update the user's profile
     private static void updateProfile(Scanner scanner) {
         System.out.print("Enter your new full name: ");
         String newFullName = scanner.nextLine();
@@ -189,7 +184,6 @@ public class OnlineExaminationSystem {
         showMainMenu(scanner);
     }
 
-    // Method to change the user's password
     private static void changePassword(Scanner scanner) {
         System.out.print("Enter your current password: ");
         String currentPassword = scanner.nextLine();
@@ -204,7 +198,6 @@ public class OnlineExaminationSystem {
         showMainMenu(scanner);
     }
 
-    // Method to log out the user
     private static void logout(Scanner scanner) {
         System.out.println("Logging out. Goodbye!");
         scanner.close();
